@@ -27,12 +27,18 @@ public class WormSpawner : MonoBehaviour
 
     void SpawnObjectInRandomPosition()
     {
-        Bounds bounds = parentGameObject.GetComponent<Renderer>().bounds;
+        MeshRenderer[] childRenderers = parentGameObject.GetComponentsInChildren<MeshRenderer>();
+        
+        MeshRenderer randomChildRenderer = childRenderers[Random.Range(0, childRenderers.Length)];
+        
+        Bounds bounds = randomChildRenderer.bounds;
+        
         Vector3 randomPosition = new Vector3(
             Random.Range(bounds.min.x, bounds.max.x),
             Random.Range(bounds.min.y, bounds.max.y),
             Random.Range(bounds.min.z, bounds.max.z));
-        Debug.Log(randomPosition);
+
+
         GameObject spawnedObject = Instantiate(objectToSpawn, randomPosition, Quaternion.identity);
         Destroy(spawnedObject, objectDuration);
     }
