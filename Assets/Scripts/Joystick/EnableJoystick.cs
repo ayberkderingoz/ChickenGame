@@ -35,7 +35,7 @@ public class EnableJoystick : MonoBehaviour
     private void HandleFingerDown(Finger touchedFinger)
     {
         if (MovementFinger != null) return;
-        Ray ray = Camera.main.ScreenPointToRay(touchedFinger.screenPosition);
+        Ray ray = Helpers.Camera.ScreenPointToRay(touchedFinger.screenPosition);
         RaycastHit hit;
         if (!Physics.Raycast(ray, out hit)) return;
         if (hit.collider.CompareTag("Clickable")) return;
