@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -23,12 +24,17 @@ public class PooledObject
     {
         ObjectPool.Instance.TakeBack(this);
     }
+    public void ReturnToPoolDelayed(float time)
+    {
+        ObjectPool.Instance.TakeBackDelayed(this, time);
+    }
 }
 
 [Serializable]
 public enum PooledObjectType
 {
-    Worm
+    Worm,
+    Enemy
 }
 
 public class ObjectPool : MonoBehaviour
@@ -99,5 +105,15 @@ public class ObjectPool : MonoBehaviour
         obj.gameObject.SetActive(false);
         var objectType = obj.type;
         PoolDictionary[objectType].Enqueue(obj);
+    }
+    public void TakeBackDelayed(PooledObject pooledObject, float time)
+    {
+        StartCoroutine(TakeBackDelayedCoroutine(pooledObject, time));
+    }
+
+    private IEnumerator TakeBackDelayedCoroutine(PooledObject pooledObject, float time)
+    {
+        yield return new WaitForSeconds(time);
+        TakeBack(pooledObject);
     }
 }

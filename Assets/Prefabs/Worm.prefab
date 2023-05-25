@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5137965656344489139}
+  - component: {fileID: 3485369391315971011}
+  - component: {fileID: 8422227886139287152}
   m_Layer: 0
   m_Name: Worm
   m_TagString: Untagged
@@ -32,6 +34,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3485369391315971011
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6218570924476487619}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.45910847, y: 1.0829132, z: 0.44117928}
+  m_Center: {x: 0.015218258, y: 0.42631328, z: -0.017082572}
+--- !u!114 &8422227886139287152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6218570924476487619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48f4c59733719485ab79025c0c712e3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objectDuration: 60
 --- !u!1001 &4926396519702796815
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,46 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
+using Entity;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class WormSpawner : MonoBehaviour
+namespace Spawner
 {
-
-    public GameObject parentGameObject;
-    public GameObject objectToSpawn;
-
-    [SerializeField]public float spawnTimer = 5f;
-    [SerializeField]public float objectDuration = 45f;
-
-    private float _timeSinceLastSpawn;
-
-    void Update()
+    public class WormSpawner : MonoBehaviour
     {
-        _timeSinceLastSpawn += Time.deltaTime;
 
-        if (_timeSinceLastSpawn >= spawnTimer)
+        public GameObject parentGameObject;
+        
+
+        [SerializeField]public float spawnTimer = 5f;
+        
+
+        private float _timeSinceLastSpawn=0f;
+
+        void Update()
         {
-            SpawnObjectInRandomPosition();
-            _timeSinceLastSpawn = 0f;
+            _timeSinceLastSpawn += Time.deltaTime;
+
+            if (_timeSinceLastSpawn >= spawnTimer)
+            {
+                SpawnObjectInRandomPosition();
+                _timeSinceLastSpawn = 0f;
+            }
         }
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        private void SpawnObjectInRandomPosition()
+        {
+            MeshRenderer[] childRenderers = parentGameObject.GetComponentsInChildren<MeshRenderer>();
+        
+            MeshRenderer randomChildRenderer = childRenderers[Random.Range(0, childRenderers.Length)];
+        
+            Bounds bounds = randomChildRenderer.bounds;
+        
+            Vector3 randomPosition = new Vector3(
+                Random.Range(bounds.min.x, bounds.max.x),
+                Random.Range(bounds.min.y, bounds.max.y),
+                Random.Range(bounds.min.z, bounds.max.z));
+
+            var wormPooledObject = ObjectPool.Instance.GetPooledObject(PooledObjectType.Worm);
+            var worm = wormPooledObject.gameObject;
+            worm.GetComponent<Worm>().SetPooledObject(wormPooledObject);
+        
+            worm.transform.position = randomPosition;
+            worm.SetActive(true);
+        
+        
+        }
+
     }
-
-    void SpawnObjectInRandomPosition()
-    {
-        MeshRenderer[] childRenderers = parentGameObject.GetComponentsInChildren<MeshRenderer>();
-        
-        MeshRenderer randomChildRenderer = childRenderers[Random.Range(0, childRenderers.Length)];
-        
-        Bounds bounds = randomChildRenderer.bounds;
-        
-        Vector3 randomPosition = new Vector3(
-            Random.Range(bounds.min.x, bounds.max.x),
-            Random.Range(bounds.min.y, bounds.max.y),
-            Random.Range(bounds.min.z, bounds.max.z));
-
-
-        GameObject spawnedObject = Instantiate(objectToSpawn, randomPosition, Quaternion.identity);
-        Destroy(spawnedObject, objectDuration);
-    }
-
 }
