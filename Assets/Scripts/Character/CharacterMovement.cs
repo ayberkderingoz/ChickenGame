@@ -21,11 +21,9 @@ namespace Player
         {
             Instance = this;
             _animator = GetComponent<Animator>();
-        }
-        private void Start()
-        {
             _rigidBody = GetComponent<Rigidbody>();
         }
+        
 
         private void FixedUpdate()
         {
