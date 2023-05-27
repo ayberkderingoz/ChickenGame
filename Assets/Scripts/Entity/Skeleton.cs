@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Character;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,6 +17,7 @@ namespace Entity
         private PooledObject _pooledObject;
         //navmesh
         private NavMeshAgent _agent;
+        private int _damage = 5;
 
         public void SetPooledObject(PooledObject pooledObject)
         {
@@ -50,6 +52,7 @@ namespace Entity
         {
             if (other.gameObject.CompareTag("Player"))
             {
+                Player.Instance.TakeDamage(_damage);
                 _pooledObject.ReturnToPool();
             }
         }

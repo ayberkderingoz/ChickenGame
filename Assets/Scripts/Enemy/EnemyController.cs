@@ -1,6 +1,6 @@
 using System;
 using Mushroom;
-using Player;
+using Character;
 using UnityEngine;
 
 namespace Enemy

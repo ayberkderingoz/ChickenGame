@@ -1,3 +1,5 @@
+using Character;
+using UI;
 using UnityEngine;
 
 namespace Entity
@@ -8,6 +10,7 @@ namespace Entity
         private float _timeSinceLastSpawn = 0f;
         [SerializeField] private float _objectDuration = 20f;
         private PooledObject _pooledObject;
+        private int _xp = 20;
     
         public void SetPooledObject(PooledObject pooledObject)
         {
@@ -28,6 +31,8 @@ namespace Entity
         {
             if (other.CompareTag("Player"))
             {
+                Player.Instance.SetXp(_xp);
+                CountUI.Instance.UpdateCount(CountUI.CountType.Worm, 1);
                 _pooledObject.ReturnToPool();
             }
         }

@@ -2,7 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Player
+namespace Character
 {
     public class CharacterMovement : MonoBehaviour
     {
