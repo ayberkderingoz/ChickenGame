@@ -1,4 +1,5 @@
 using Character;
+using Spawner;
 using UI;
 using UnityEngine;
 
@@ -32,9 +33,20 @@ namespace Entity
             if (other.CompareTag("Player"))
             {
                 Player.Instance.SetXp(_xp);
-                CountUI.Instance.UpdateCount(CountUI.CountType.Worm, 1);
+                ScoreManager.Instance.UpdateScore(ScoreManager.ScoreType.Worm,ScoreManager.Instance.GetScore(ScoreManager.ScoreType.Worm)+1);
                 _pooledObject.ReturnToPool();
+                WormSpawner.Instance.RemoveWorm(gameObject);
+  
+            }
+
+            if (other.CompareTag("Worker"))
+            {
+                if (other.gameObject.GetComponent<WorkerChicken>().IsCarrying()) return;
+                _pooledObject.ReturnToPool();
+                WormSpawner.Instance.RemoveWorm(gameObject);
             }
         }
+        
+
     }
 }
