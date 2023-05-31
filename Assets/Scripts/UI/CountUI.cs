@@ -1,12 +1,14 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.SocialPlatforms.Impl;
+
 
 namespace UI
 {
     public class CountUI : MonoBehaviour
     {
-        //TODO: Ardaya sor bunların countunu tutup count değişikliğinde eventte updatelemek mi daha mantıklı bu mu daha mantıklı?
         [SerializeField] private TextMeshProUGUI wormCount;
         [SerializeField] private TextMeshProUGUI goldCount;
         [SerializeField] private TextMeshProUGUI eggCount;
@@ -20,59 +22,43 @@ namespace UI
                 _instance = this;
             }
         }
-        public enum CountType
+
+        private void Start()
         {
-            Worm,
-            Gold,
-            Egg
+            ScoreManager.Instance.OnScoreChanged += OnScoreChanged;
+            ScoreManager.Instance.OnScoreReset += OnScoreReset;
         }
         
-        public void UpdateCount(CountType countType, int count)
+        private void OnScoreReset(ScoreManager.ScoreType scoreType)
         {
-            count += GetCount(countType);
-            switch (countType)
+            switch (scoreType)
             {
-                case CountType.Worm:
-                    wormCount.text = count.ToString();
-                    break;
-                case CountType.Gold:
-                    goldCount.text = count.ToString();
-                    break;
-                case CountType.Egg:
-                    eggCount.text = count.ToString();
-                    break;
-            }
-        }
-        
-        public int GetCount(CountType countType)
-        {
-            switch (countType)
-            {
-                case CountType.Worm:
-                    return int.Parse(wormCount.text);
-                case CountType.Gold:
-                    return int.Parse(goldCount.text);
-                case CountType.Egg:
-                    return int.Parse(eggCount.text);
-            }
-            return 0;
-        }
-        
-        public void ResetCount(CountType countType)
-        {
-            switch (countType)
-            {
-                case CountType.Worm:
+                case ScoreManager.ScoreType.Worm:
                     wormCount.text = "0";
                     break;
-                case CountType.Gold:
+                case ScoreManager.ScoreType.Gold:
                     goldCount.text = "0";
                     break;
-                case CountType.Egg:
+                case ScoreManager.ScoreType.Egg:
                     eggCount.text = "0";
                     break;
             }
         }
-        
+        private void OnScoreChanged(ScoreManager.ScoreType scoreType, int count)
+        {
+            switch (scoreType)
+            {
+                case ScoreManager.ScoreType.Worm:
+                    wormCount.text = count.ToString();
+                    break;
+                case ScoreManager.ScoreType.Gold:
+                    goldCount.text = count.ToString();
+                    break;
+                case ScoreManager.ScoreType.Egg:
+                    eggCount.text = count.ToString();
+                    break;
+            }
+        }
+
     }
 }
