@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Entity;
 using UnityEngine;
 
 [Serializable]
@@ -34,7 +35,8 @@ public class PooledObject
 public enum PooledObjectType
 {
     Worm,
-    Enemy
+    Enemy,
+    EnemyProjectile
 }
 
 public class ObjectPool : MonoBehaviour
