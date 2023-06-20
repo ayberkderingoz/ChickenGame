@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Entity;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace Spawner
@@ -35,10 +36,18 @@ namespace Spawner
             {
                 _instance = this;
             }
+        
+            //Spawn worms until objectpool queue is empty
+            while (ObjectPool.Instance.PoolDictionary[PooledObjectType.Worm].Count > 10)
+            {
+                SpawnObjectInRandomPosition();
+            }
         }
 
         void Update()
         {
+            
+            if(ObjectPool.Instance.PoolDictionary[PooledObjectType.Worm].Count == 0) return;
             _timeSinceLastSpawn += Time.deltaTime;
 
             if (_timeSinceLastSpawn >= spawnTimer)
@@ -46,6 +55,10 @@ namespace Spawner
                 SpawnObjectInRandomPosition();
                 _timeSinceLastSpawn = 0f;
             }
+            
+            
+            
+            
         }
 
 

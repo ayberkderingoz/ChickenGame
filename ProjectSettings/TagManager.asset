@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Ground
   - Clickable
+  - Worm
+  - BigChicken
+  - Worker
+  - WorkerIncubator
+  - SoldierIncubator
+  - Soldier
   layers:
   - Default
   - TransparentFX

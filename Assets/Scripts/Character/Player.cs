@@ -13,10 +13,16 @@ namespace Character
         private int _xp = 0;
         private int _health = 100;
 
-        
+
         private static Player _instance;
         public static Player Instance => _instance;
-        
+
+
+        public Action<int> OnHealthChanged;
+        public Action<int> OnXpChanged;
+        public Action<int> OnLevelChanged;
+
+
         private void Awake()
         {
             if (_instance == null)
@@ -34,17 +40,16 @@ namespace Character
             }
             else
             {
-                //TODO:Update health bar
-                ProgressBar.Instance.UpdateHealthBar(_health);
-                
+                OnHealthChanged?.Invoke(_health);
+
             }
         }
 
         private void LevelUp()
         {
             _level += 1;
-            ProgressBar.Instance.LevelUp();
-            //TODO: Load Corresponding Level
+            OnLevelChanged?.Invoke(_level);
+
         }
 
 
@@ -56,9 +61,41 @@ namespace Character
                 LevelUp();
                 _xp -= 100;
             }
-            ProgressBar.Instance.UpdateXpBar(_xp);
+
+            OnXpChanged?.Invoke(_xp);
         }
 
+        public void StackEgg(GameObject egg, PooledObject pooledObjet)
+        {
+            _eggs.Add(egg, pooledObjet);
+            ScoreManager.Instance.UpdateScore(ScoreManager.ScoreType.Egg, _eggs.Count);
+            egg.transform.SetParent(gameObject.transform);
+            float maxXPos = egg.transform.position.y + egg.transform.localScale.y / 2;
+            var position = gameObject.transform.position;
+            egg.transform.localPosition = new Vector3(0, (maxXPos * _eggs.Count), -1);
+
+        }
+
+        private Dictionary<GameObject, PooledObject> _eggs;
+
+        private void Start()
+        {
+            _eggs = new Dictionary<GameObject, PooledObject>();
+        }
+
+        public bool IsEggInDictionary(PooledObject pooledObject)
+        {
+            return _eggs.ContainsValue(pooledObject);
+        }
         
+        
+        public Dictionary<GameObject,PooledObject> GetEggs()
+        {
+            return _eggs;
+        }
+        public void SetEggs(Dictionary<GameObject,PooledObject> eggs)
+        {
+            _eggs = eggs;
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace Entity
         [SerializeField] private float _objectDuration = 20f;
         private PooledObject _pooledObject;
         private int _xp = 20;
+        
     
         public void SetPooledObject(PooledObject pooledObject)
         {
@@ -24,6 +25,7 @@ namespace Entity
             if (_timeSinceLastSpawn >= _objectDuration)
             {
                 _pooledObject.ReturnToPool();
+                WormSpawner.Instance.RemoveWorm(gameObject);
                 _timeSinceLastSpawn = 0f;
             }
         }
@@ -42,8 +44,11 @@ namespace Entity
             if (other.CompareTag("Worker"))
             {
                 if (other.gameObject.GetComponent<WorkerChicken>().IsCarrying()) return;
+                other.gameObject.GetComponent<WorkerChicken>().SetCarrying(true);
+                
                 _pooledObject.ReturnToPool();
-                WormSpawner.Instance.RemoveWorm(gameObject);
+                
+                
             }
         }
         
