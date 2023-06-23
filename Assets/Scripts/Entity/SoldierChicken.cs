@@ -10,6 +10,7 @@ namespace Entity
         private bool _isCarryingWorm = false;
         private NavMeshAgent _agent;
         private PooledObject _pooledObject;
+        
 
 
         public void SetPooledObject(PooledObject pooledObject)
@@ -21,16 +22,12 @@ namespace Entity
         {
             _agent = GetComponent<NavMeshAgent>();
         }
-        
-
-
-
-
-        private void Update()
+        private void MoveArea()
         {
-
+            
+            var areas = GameObject.FindGameObjectsWithTag("SoldierArea");
+            _agent.SetDestination(SoldierPositionManager.Instance.GetPosition());
         }
-        
 
     }
 }
