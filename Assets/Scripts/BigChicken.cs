@@ -79,8 +79,8 @@ public class BigChicken : MonoBehaviour
     private void LayEgg()
     {
         var position = transform.position;
-        var randomPosition = position + new Vector3(UnityEngine.Random.Range(-5, 5)+5, 0,
-            UnityEngine.Random.Range(-5, 5)+5);
+        var randomPosition = position + new Vector3(UnityEngine.Random.Range(-2, 2), 0,
+            2);
         
         var eggPooledObject = ObjectPool.Instance.GetPooledObject(PooledObjectType.Egg);
         var egg = eggPooledObject.gameObject;

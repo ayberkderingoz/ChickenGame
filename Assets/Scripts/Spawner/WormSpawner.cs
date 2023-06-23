@@ -78,9 +78,9 @@ namespace Spawner
             Bounds bounds = randomChildRenderer.bounds;
         
             Vector3 randomPosition = new Vector3(
-                Random.Range(bounds.min.x, bounds.max.x),
+                Random.Range(bounds.min.x+5, bounds.max.x-5),
                 Random.Range(bounds.min.y, bounds.max.y),
-                Random.Range(bounds.min.z, bounds.max.z));
+                Random.Range(bounds.min.z+5, bounds.max.z-5));
 
             var wormPooledObject = ObjectPool.Instance.GetPooledObject(PooledObjectType.Worm);
             var worm = wormPooledObject.gameObject;

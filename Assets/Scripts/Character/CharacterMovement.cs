@@ -14,13 +14,14 @@ namespace Character
         private Animator _animator;
         private Vector3 _lastMovement;
         private float _timer = 0.0f;
-        private float _waitTime = 1.5f;
+        private float _waitTime = .5f;
         
         public static CharacterMovement Instance { get; private set; }
         private void Awake()
         {
             Instance = this;
-            _animator = GetComponent<Animator>();
+            _animator = GetComponentInChildren<Animator>();
+            
             _rigidBody = GetComponent<Rigidbody>();
         }
         
@@ -36,32 +37,19 @@ namespace Character
             
             if (movement != Vector3.zero && _joystick.isActiveAndEnabled)
             {
-                if ((_joystick.Horizontal*_joystick.Horizontal)+(_joystick.Vertical*_joystick.Vertical) > 0.8f)
-                {
-                    moveSpeed = 10f;
-                    _animator.runtimeAnimatorController = Resources.Load("BasicMotions@Sprint") as RuntimeAnimatorController;
-                }
-                else
-                {
-                    moveSpeed = 5f;
-                    _animator.runtimeAnimatorController = Resources.Load("BasicMotions@Walk") as RuntimeAnimatorController;
-            
-                }
                 
                 transform.rotation = Quaternion.LookRotation(new Vector3(moveX, 0, moveZ));
-                _rigidBody.velocity = new Vector3(_joystick.Horizontal * moveSpeed, _rigidBody.velocity.y, _joystick.Vertical * moveSpeed);
+                _rigidBody.velocity = new Vector3(_joystick.Horizontal * moveSpeed,
+                    _rigidBody.velocity.y, _joystick.Vertical * moveSpeed);
                 _lastMovement = _rigidBody.velocity;
             }
             else
             {
-               
-                
-                _rigidBody.AddForce(_lastMovement * 0.3f, ForceMode.Impulse);
+                _rigidBody.AddForce(_lastMovement * 0.1f, ForceMode.Impulse);
                 _lastMovement = Vector3.zero;
                 _timer += Time.deltaTime;
                 if (_timer >= _waitTime)
                 {
-                    _animator.runtimeAnimatorController = Resources.Load("BasicMotions@Idle") as RuntimeAnimatorController;
                     _timer = 0.0f;
                 }
             }
