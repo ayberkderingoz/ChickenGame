@@ -22,7 +22,7 @@ public class SoldierPositionManager : MonoBehaviour
 
     private void Start()
     {
-        _areas = GameObject.FindGameObjectsWithTag("SoldierPosition").ToList();
+        _areas = GameObject.FindGameObjectsWithTag("SoldierArea").ToList();
         
     }
     public Vector3 GetPosition()

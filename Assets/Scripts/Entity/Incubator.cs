@@ -41,7 +41,7 @@ public class Incubator : MonoBehaviour
 
                 }
 
-                if (gameObject.CompareTag("SoldierIncubator"))
+                if (gameObject.CompareTag("SoldierIncubator")) //TODO: Add count check for every level
                 {
                     var soldierPooledObject = ObjectPool.Instance.GetPooledObject(PooledObjectType.SoldierChicken);
                     var soldier = soldierPooledObject.gameObject;
