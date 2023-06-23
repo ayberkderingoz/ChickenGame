@@ -56,6 +56,25 @@ public class Incubator : MonoBehaviour
     }
 
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (_isIncubating) return;
+        if (other.CompareTag("Player"))
+        {
+            if (Player.Instance.GetEggs().Count > 0)
+            {
+                var eggs = Player.Instance.GetEggs();
+                _egg = eggs.Last().Key;
+                _isIncubating = true;
+                _egg.transform.SetParent(transform);
+                _egg.transform.localPosition = Vector3.zero;
+                _egg.GetComponent<Egg>().SetIncubating(true);
+                eggs.Remove(_egg);
+                Player.Instance.SetEggs(eggs);
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(_isIncubating) return;

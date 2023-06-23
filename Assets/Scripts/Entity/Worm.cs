@@ -12,6 +12,7 @@ namespace Entity
         [SerializeField] private float _objectDuration = 20f;
         private PooledObject _pooledObject;
         private int _xp = 20;
+        public bool isTargeted = false;
         
     
         public void SetPooledObject(PooledObject pooledObject)
@@ -22,7 +23,7 @@ namespace Entity
         private void Update()
         {
             _timeSinceLastSpawn += Time.deltaTime;
-            if (_timeSinceLastSpawn >= _objectDuration)
+            if (_timeSinceLastSpawn >= _objectDuration && !isTargeted)
             {
                 _pooledObject.ReturnToPool();
                 WormSpawner.Instance.RemoveWorm(gameObject);

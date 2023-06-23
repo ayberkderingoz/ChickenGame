@@ -11,11 +11,12 @@ using UnityEngine.AI;
 public class WorkerChicken : MonoBehaviour
 {
     
-    private bool _isCarryingWorm = false;
+    public bool _isCarryingWorm = false;
     private NavMeshAgent _agent;
     private GameObject bigChicken;
-    private List<GameObject> _wormList;
+    public List<GameObject> _wormList;
     private PooledObject _pooledObject;
+    public GameObject _targetWorm;
 
     
 
@@ -55,39 +56,42 @@ public class WorkerChicken : MonoBehaviour
 
             MoveToBigChicken();
         }
-        else 
+        else if(_targetWorm == null)
         {
-
+            
             MoveToWorm();
         }
     }
     private void MoveToBigChicken()
     {
+        _targetWorm = null;
         _agent.SetDestination(bigChicken.transform.position);
         transform.LookAt(_agent.nextPosition);
-
     }
 
     //move to the closest worm
     public void MoveToWorm()
     {
         var closestWorm = GetClosestWormPosition(transform.position);
+        _targetWorm = closestWorm;
         _agent.SetDestination(closestWorm.transform.position);
         transform.LookAt(_agent.nextPosition);
-        WormSpawner.Instance.RemoveWorm(closestWorm);
+        WormSpawner.Instance.RemoveWorm(_targetWorm);
     }
 
 
     private GameObject GetClosestWormPosition(Vector3 position)
     {
-        var closestWorm = _wormList.First();
+        
+        var closestWorm = _wormList[0];
         foreach (var worm in _wormList)
         {
             if (Vector3.Distance(position, worm.transform.position) <
                 Vector3.Distance(position, closestWorm.transform.position))
             {
                 closestWorm = worm;
-                
+                worm.GetComponent<Worm>().isTargeted = true;
+
             }
         }
         return closestWorm;

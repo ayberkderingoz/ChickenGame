@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2365938197074844538}
   - component: {fileID: 3368948189033574216}
   - component: {fileID: 5410293724752229933}
-  - component: {fileID: -6332541361538891182}
+  - component: {fileID: 917734553776616551}
   m_Layer: 0
   m_Name: Worker
   m_TagString: Worker
@@ -62,6 +62,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b94bc91954ff491abf8ac98e48a4818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isCarryingWorm: 0
+  _wormList: []
+  _targetWorm: {fileID: 0}
 --- !u!195 &5410293724752229933
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -84,7 +87,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!54 &-6332541361538891182
+--- !u!54 &917734553776616551
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,9 +99,9 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!1001 &1436946601972478727
 PrefabInstance:
