@@ -39,7 +39,8 @@ public enum PooledObjectType
     EnemyProjectile,
     Egg,
     WorkerChicken,
-    SoldierChicken
+    SoldierChicken,
+    WormText
 }
 
 public class ObjectPool : MonoBehaviour

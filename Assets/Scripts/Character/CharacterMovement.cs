@@ -15,6 +15,37 @@ namespace Character
         private Vector3 _lastMovement;
         private float _timer = 0.0f;
         private float _waitTime = .5f;
+        private Transform _direction;
+        private bool _isPulling;
+
+        
+
+
+        public void SetPullingMode(float speed,Transform direction, bool isPulling)
+        {
+            moveSpeed = speed;
+            _direction = direction;
+            _isPulling = isPulling;
+            
+        }
+
+        public void SetPullingMode(float speed,bool isPulling)
+        {
+            
+            moveSpeed = speed;
+            _isPulling = isPulling;
+            _direction = null;
+            
+
+        }
+
+        
+        public void SetMoveSpeed(float speed)
+        {
+            moveSpeed = speed;
+        }
+        
+        
         
         public static CharacterMovement Instance { get; private set; }
         private void Awake()
@@ -29,16 +60,23 @@ namespace Character
         private void FixedUpdate()
         {
             //_rigidBody.velocity = new Vector3(_joystick.Horizontal * moveSpeed, _rigidBody.velocity.y, _joystick.Vertical * moveSpeed);
-            
-            
+
             float moveX = _joystick.Horizontal;
             float moveZ = _joystick.Vertical;
             Vector3 movement = new Vector3(moveX, 0, moveZ);
             
-            if (movement != Vector3.zero && _joystick.isActiveAndEnabled)
+            if (movement != Vector3.zero && _joystick.isActiveAndEnabled && !_isPulling)
             {
                 
                 transform.rotation = Quaternion.LookRotation(new Vector3(moveX, 0, moveZ));
+                _rigidBody.velocity = new Vector3(_joystick.Horizontal * moveSpeed,
+                    _rigidBody.velocity.y, _joystick.Vertical * moveSpeed);
+                _lastMovement = _rigidBody.velocity;
+            }
+            else if (movement != Vector3.zero && _joystick.isActiveAndEnabled && _isPulling)
+            {
+                //smooth rotate to direction
+                transform.rotation = Quaternion.LookRotation(_direction.position - transform.position);
                 _rigidBody.velocity = new Vector3(_joystick.Horizontal * moveSpeed,
                     _rigidBody.velocity.y, _joystick.Vertical * moveSpeed);
                 _lastMovement = _rigidBody.velocity;

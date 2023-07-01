@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3186,7 +3186,7 @@ MonoBehaviour:
   objectToPool:
   - type: 0
     gameObject: {fileID: 6218570924476487619, guid: 97ee52e7155824dfd98419027b43d635, type: 3}
-    amount: 20
+    amount: 40
     parent: {fileID: 2009691278}
   - type: 1
     gameObject: {fileID: 573268435127343884, guid: 2dc48fbab1a2743fc96303f3caf6c6b2, type: 3}
@@ -3198,7 +3198,7 @@ MonoBehaviour:
     parent: {fileID: 548566999}
   - type: 3
     gameObject: {fileID: 1044626726107233578, guid: d7660985f5d91421997ac5d13f8b4a39, type: 3}
-    amount: 10
+    amount: 20
     parent: {fileID: 1420396790}
   - type: 4
     gameObject: {fileID: 2568121900777430965, guid: 7c11cb3e0a0334c6da0765c2f2c42ee9, type: 3}
@@ -3208,6 +3208,10 @@ MonoBehaviour:
     gameObject: {fileID: 2568121900777430965, guid: 89dd5ec4639724b68b1215d1e6b9b721, type: 3}
     amount: 10
     parent: {fileID: 973641600}
+  - type: 6
+    gameObject: {fileID: 3181870598525566795, guid: fec03ac367ef845349fbe4407285e912, type: 3}
+    amount: 40
+    parent: {fileID: 2172473106303039372}
   isPoolSet: 0
 --- !u!1001 &775342236
 PrefabInstance:
@@ -7291,7 +7295,7 @@ RectTransform:
   m_Children:
   - {fileID: 313296446}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7894,7 +7898,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 188012765260993106, guid: 4195e508216dd413ba96844434bda4ec, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 188012765260993106, guid: 4195e508216dd413ba96844434bda4ec, type: 3}
       propertyPath: m_AnchorMax.x

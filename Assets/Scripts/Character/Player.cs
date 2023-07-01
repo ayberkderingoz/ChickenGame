@@ -13,6 +13,8 @@ namespace Character
         private int _xp = 0;
         private int _health = 100;
 
+        private bool _pulling;
+
 
         private static Player _instance;
         public static Player Instance => _instance;
@@ -80,6 +82,7 @@ namespace Character
 
         private void Start()
         {
+            LevelUp();
             _eggs = new Dictionary<GameObject, PooledObject>();
         }
 
@@ -97,5 +100,21 @@ namespace Character
         {
             _eggs = eggs;
         }
+
+        public int GetLevel()
+        {
+            return _level;
+        }
+
+        public bool IsPulling()
+        {
+            return _pulling;
+        }
+
+        public void SetPulling(bool pulling)
+        {
+            _pulling = pulling;
+        }
+
     }
 }
