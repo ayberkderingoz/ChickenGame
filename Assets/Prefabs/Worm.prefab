@@ -690,8 +690,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   DeflectOnlyCollisions: 1
-  _Editor_Category: 0
-  _Editor_FeaturesCategory: 3
+  _Editor_Category: 3
+  _Editor_FeaturesCategory: 0
   DrawGizmos: 1
   StartBone: {fileID: 1543293409690288370}
   EndBone: {fileID: 0}

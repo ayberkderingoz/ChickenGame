@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -17,7 +18,25 @@ namespace Character
         private float _waitTime = .5f;
         private Transform _direction;
         private bool _isPulling;
+        private bool thrown;
 
+
+        public void SetThrown(bool isThrown)
+        {
+            thrown = isThrown;
+            StartCoroutine(StopThrown());
+        }
+
+        public bool GetThrown()
+        {
+            return thrown;
+        }
+
+        private IEnumerator StopThrown()
+        {
+            yield return new WaitForSeconds(1);
+            thrown = false;
+        }
         
 
 
@@ -64,7 +83,7 @@ namespace Character
             float moveX = _joystick.Horizontal;
             float moveZ = _joystick.Vertical;
             Vector3 movement = new Vector3(moveX, 0, moveZ);
-            
+            if (thrown) return;
             if (movement != Vector3.zero && _joystick.isActiveAndEnabled && !_isPulling)
             {
                 

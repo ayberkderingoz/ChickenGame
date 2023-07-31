@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Entity;
+using FIMSpace.FTail;
 using UI;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -81,17 +82,23 @@ namespace Spawner
             worms.Add(worm);
             OnWormsChanged?.Invoke(worms);
 
+
+
             worm.transform.position = randomPosition;
+
+
             var level = GetRandomLevel();
             worm.GetComponent<Worm>().SetLevel(level);
             worm.GetComponent<Worm>().levelText = SpawnWormText(new Vector3(randomPosition.x+.5f,randomPosition.y+.5f,randomPosition.z), level,worm);
             
             worm.SetActive(true);
             
-        
-        
-        }
+            
+            
 
+
+        }
+        
         private Vector3 RandomPositionFarFromWorms()
         {
             var bestLocation = Vector3.zero;
@@ -101,7 +108,7 @@ namespace Spawner
             {
                 return RandomPosition();
             }
-            for (var i = 0; i < 30; i++)
+            for (var i = 0; i < 60; i++)
             {
                 var randomPosition = RandomPosition();
                 var j = 0;

@@ -78,6 +78,8 @@ namespace Entity
                 yield return new WaitForSeconds(0.5f);
             }
         }
+
+        
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
@@ -92,14 +94,16 @@ namespace Entity
                 }
                 else
                 {
-                    //throw player back from object
-                    Debug.Log(":D");
-                    other.attachedRigidbody.AddExplosionForce(100,transform.position,3f,0f,ForceMode.Acceleration);
+                    //throw player opposite direction from worm
+                    var direction = (Player.Instance.transform.position - transform.position).normalized;
 
+                    CharacterMovement.Instance.SetThrown(true);
+                    Player.Instance.GetComponent<Rigidbody>().AddForce(direction * 400f);
+                    
                 }
 
             }
-
+        
             if (other.CompareTag("Worker"))
             {
                 if (other.gameObject.GetComponent<WorkerChicken>().IsCarrying()) return;
