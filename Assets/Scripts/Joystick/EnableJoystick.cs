@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Debug = System.Diagnostics.Debug;
@@ -32,13 +34,22 @@ public class EnableJoystick : MonoBehaviour
         ETouch.Touch.onFingerUp += HandleFingerUp;
     }
 
+
+
+    private void IsUIActive()
+    {
+        //return if the ui is active
+        
+    }
     private void HandleFingerDown(Finger touchedFinger)
     {
         if (MovementFinger != null) return;
         Ray ray = Helpers.Camera.ScreenPointToRay(touchedFinger.screenPosition);
         RaycastHit hit;
         if (!Physics.Raycast(ray, out hit)) return;
-        if (hit.collider.CompareTag("Clickable")) return;
+        print(hit.transform.gameObject.tag);
+        if (hit.transform.gameObject.CompareTag("Clickable")) return;
+        if (WorkerUpgradeUI.Instance.IsActive()) return;
         joystick.SetActive(true);
         joystick.transform.position = touchedFinger.screenPosition;
     }
