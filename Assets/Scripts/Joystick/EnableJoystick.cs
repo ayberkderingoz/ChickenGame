@@ -49,7 +49,7 @@ public class EnableJoystick : MonoBehaviour
         if (!Physics.Raycast(ray, out hit)) return;
         print(hit.transform.gameObject.tag);
         if (hit.transform.gameObject.CompareTag("Clickable")) return;
-        if (WorkerUpgradeUI.Instance.IsActive()) return;
+        //if (WorkerUpgradeUI.Instance.IsActive()) return;
         joystick.SetActive(true);
         joystick.transform.position = touchedFinger.screenPosition;
     }

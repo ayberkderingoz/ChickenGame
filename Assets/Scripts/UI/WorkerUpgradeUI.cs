@@ -19,6 +19,7 @@ namespace UI
 
         public bool IsActive()
         {
+
             return gameObject.activeSelf;
         }
     }

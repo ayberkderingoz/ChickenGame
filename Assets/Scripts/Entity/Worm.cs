@@ -57,8 +57,10 @@ namespace Entity
             if (Vector3.Distance(transform.position, Player.Instance.transform.position) < 3f)
             {
                 //head.position = Player.Instance.transform.position;
+                isTargeted = true;
                 CharacterMovement.Instance.SetPullingMode(3f,transform,true);
-                head.position = Vector3.MoveTowards(head.position, Player.Instance.transform.position, 1f);
+                var position = Player.Instance.transform.position;
+                head.position = Vector3.MoveTowards(head.position, new Vector3(position.x,position.y+1.6f,position.z), 1f);
                 yield return new WaitForSeconds(0.1f);
                 StartCoroutine(GetPulled(head));
                 
@@ -94,11 +96,10 @@ namespace Entity
                 }
                 else
                 {
-                    //throw player opposite direction from worm
                     var direction = (Player.Instance.transform.position - transform.position).normalized;
 
                     CharacterMovement.Instance.SetThrown(true);
-                    Player.Instance.GetComponent<Rigidbody>().AddForce(direction * 400f);
+                    Player.Instance.GetComponent<Rigidbody>().AddForce(direction * 600f);
                     
                 }
 

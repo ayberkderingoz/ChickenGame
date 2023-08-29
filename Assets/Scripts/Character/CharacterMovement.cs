@@ -34,7 +34,7 @@ namespace Character
 
         private IEnumerator StopThrown()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(.7f);
             thrown = false;
         }
         
