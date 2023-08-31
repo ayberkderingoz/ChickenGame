@@ -48,6 +48,7 @@ public class Incubator : MonoBehaviour
                     soldier.transform.position = transform.position;
                     soldier.SetActive(true);
                     soldier.GetComponent<SoldierChicken>().SetPooledObject(soldierPooledObject);
+                    SoldierChickenController.Instance.AddSoldier(soldier);
                     _egg.transform.SetParent(_eggParent.transform);
                     _egg.GetComponent<Egg>().GetPooledObject().ReturnToPool();
                 }

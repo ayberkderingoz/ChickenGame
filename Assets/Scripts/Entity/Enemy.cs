@@ -1,24 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using Character;
+using Controller;
+using Entity;
+using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
 
     private int _damage = 0;
+    
+    public GameObject target;
 
-    private int range = 0;
-    // Start is called before the first frame update
+
+    private Animator animator;
+    private bool isDead = false;
+
+    private bool playerDetected;
+
+    private Transform player;
+    [SerializeField] private LayerMask targetLayer;
+    [SerializeField] private float detectionRange;
+    public string[] targetTags = { "Player", "Soldier" };
+
+
+    public List<GameObject> targetList;
+    
+    private void OnTargetChanged(List<GameObject> targets)
+    {
+        this.targetList = targets;
+    }
+    
     void Start()
     {
-        
+        animator = GetComponentInChildren<Animator>();
+        player = Player.Instance.gameObject.transform;
+        TargetController.Instance.OnTargetChanged += OnTargetChanged;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        SearchTarget();
+        if (target is not null)
+        {
+            Attack();
+        }
     }
     private void OnCollisionEnter(Collision other)
     {
@@ -29,24 +58,73 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void MoveToPlayerNavMesh(Vector3 playerPosition)
+
+    
+    private void SearchTarget()
     {
-        var player = GameObject.FindGameObjectWithTag("Player");
-        var playerPosition = player.transform.position;
-        var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        agent.SetDestination(playerPosition);
+        Transform closestTarget = null;
+        float closestDistance = Mathf.Infinity;
+        foreach (GameObject targetObject in targetList)
+        {
+            Vector3 rayDirection = targetObject.transform.position - transform.position;
+            if (Physics.Raycast(transform.position, rayDirection, out RaycastHit hit, detectionRange, targetLayer))
+            {
+
+                float distanceToTarget = Vector3.Distance(transform.position, targetObject.transform.position);
+
+                if (distanceToTarget < closestDistance)
+                {
+                    closestDistance = distanceToTarget; 
+                    closestTarget = targetObject.transform;
+                }
+            }
+        }
+
+        if (closestTarget is not null) target = closestTarget.gameObject;
+        else
+        {
+            target = null;
+        }
     }
 
-    private void MoveToClosestEntity()
+
+
+    private GameObject SetTarget()
+    {
+        var playerGameOjbect = Player.Instance.gameObject;
+        var soldier = SoldierChickenController.Instance.GetClosestSoldier(gameObject.transform.position);
+
+        if (Vector3.Distance(playerGameOjbect.transform.position, gameObject.transform.position) > Vector3.Distance(soldier.transform.position,gameObject.transform.position))
+        {
+            return soldier;
+        }
+        else
+        {
+            return playerGameOjbect;
+        }
+    }
+
+    private bool IsInRange(Vector3 distance)
     {
         
+        
+        return true;
     }
-    private bool IsPlayerInRange()
+
+    private void Idle()
     {
-        var player = GameObject.FindGameObjectWithTag("Player");
-        var playerPosition = player.transform.position;
-        var position = transform.position;
-        var distance = Vector3.Distance(playerPosition, position);
-        return distance < range;
+        animator.SetTrigger("Dance");
     }
+
+    private void Attack()
+    {
+        animator.SetTrigger("Attack");
+    }
+
+    private void Die()
+    {
+        isDead = true;
+        animator.SetTrigger("Die");
+    }
+
 }
