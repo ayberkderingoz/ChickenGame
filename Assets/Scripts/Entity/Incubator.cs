@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Character;
+using Controller;
 using Entity;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -50,6 +51,7 @@ public class Incubator : MonoBehaviour
                     soldier.GetComponent<SoldierChicken>().SetPooledObject(soldierPooledObject);
                     SoldierChickenController.Instance.AddSoldier(soldier);
                     _egg.transform.SetParent(_eggParent.transform);
+                    EnemyController.Instance.BroadcastEnemies();
                     _egg.GetComponent<Egg>().GetPooledObject().ReturnToPool();
                 }
             }

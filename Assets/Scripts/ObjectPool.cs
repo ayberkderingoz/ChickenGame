@@ -36,7 +36,7 @@ public enum PooledObjectType
 {
     Worm,
     Enemy,
-    EnemyProjectile,
+    SoldierProjectile,
     Egg,
     WorkerChicken,
     SoldierChicken,

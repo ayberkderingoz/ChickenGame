@@ -100,6 +100,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3684d82a98db4b6b868be543dd1b04f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 10
+  _shotInterval: 2
+  enemyList: []
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  detectionRange: 15
+  target: {fileID: 0}
 --- !u!1001 &6606318177080211426
 PrefabInstance:
   m_ObjectHideFlags: 0

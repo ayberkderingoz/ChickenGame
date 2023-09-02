@@ -13,6 +13,7 @@ TagManager:
   - SoldierIncubator
   - Soldier
   - SoldierArea
+  - Enemy
   layers:
   - Default
   - TransparentFX

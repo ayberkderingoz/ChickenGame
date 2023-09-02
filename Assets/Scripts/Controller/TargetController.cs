@@ -40,7 +40,7 @@ namespace Controller
         }
         private void OnSoldierChickenChanged(List<GameObject> soldiers)
         {
-            this.targetList = soldiers;
+            this.targetList = new List<GameObject>(soldiers);
             targetList.Add(Player.Instance.gameObject);
             OnTargetChanged?.Invoke(targetList);
         }

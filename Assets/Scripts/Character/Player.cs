@@ -11,7 +11,7 @@ namespace Character
     {
         private int _level = 0;
         private int _xp = 0;
-        private int _health = 100;
+        public int _health = 100;
 
         private bool _pulling;
 

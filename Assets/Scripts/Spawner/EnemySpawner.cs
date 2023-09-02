@@ -6,7 +6,7 @@ namespace Spawner
 {
     public class EnemySpawner : MonoBehaviour
     {
-        [SerializeField]private float spawnTimer=5f;
+        /*[SerializeField]private float spawnTimer=5f;
         //spawn timer
         private float _timeSinceLastSpawn = 0f;
         //spawn enemy
@@ -35,7 +35,7 @@ namespace Spawner
             enemy.SetActive(true);
         
         
-        }
+        }*/
     
     }
 }

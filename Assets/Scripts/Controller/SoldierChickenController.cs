@@ -32,7 +32,7 @@ public class SoldierChickenController : MonoBehaviour
     public void AddSoldier(GameObject soldier)
     {
         soldierChickens.Add(soldier);
-        OnSoldierChickenChanged.Invoke(soldierChickens);
+        OnSoldierChickenChanged?.Invoke(soldierChickens);
     }
     public GameObject GetClosestSoldier(Vector3 pos)
     {

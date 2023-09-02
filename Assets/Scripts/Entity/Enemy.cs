@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Character;
@@ -6,21 +7,27 @@ using Entity;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
 
-    private int _damage = 0;
+    [SerializeField] private int _damage = 5;
+    [SerializeField] private int _health = 100;
     
     public GameObject target;
 
 
     private Animator animator;
     private bool isDead = false;
+    private NavMeshAgent _agent;
 
-    private bool playerDetected;
+    
+    
 
     private Transform player;
+    [SerializeField] private float attackCooldown = 2.19f;
+    private float lastAttackTime;
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private float detectionRange;
     public string[] targetTags = { "Player", "Soldier" };
@@ -32,13 +39,19 @@ public class Enemy : MonoBehaviour
     {
         this.targetList = targets;
     }
-    
+
+    private void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+    }
+
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
         player = Player.Instance.gameObject.transform;
         TargetController.Instance.OnTargetChanged += OnTargetChanged;
     }
+    
 
     // Update is called once per frame
     private void Update()
@@ -46,7 +59,19 @@ public class Enemy : MonoBehaviour
         SearchTarget();
         if (target is not null)
         {
-            Attack();
+            if (Vector3.Distance(target.transform.position, gameObject.transform.position) > 3)
+            {
+                MoveToTarget();
+            }
+            else
+            {
+                Attack();
+            }
+        }
+        if (target is null)
+        {
+            _agent.SetDestination(transform.position);
+            Idle();
         }
     }
     private void OnCollisionEnter(Collision other)
@@ -88,20 +113,11 @@ public class Enemy : MonoBehaviour
     }
 
 
-
-    private GameObject SetTarget()
+    private void MoveToTarget()
     {
-        var playerGameOjbect = Player.Instance.gameObject;
-        var soldier = SoldierChickenController.Instance.GetClosestSoldier(gameObject.transform.position);
-
-        if (Vector3.Distance(playerGameOjbect.transform.position, gameObject.transform.position) > Vector3.Distance(soldier.transform.position,gameObject.transform.position))
-        {
-            return soldier;
-        }
-        else
-        {
-            return playerGameOjbect;
-        }
+        animator.SetTrigger("Walk");
+        _agent.SetDestination(target.transform.position);
+        transform.LookAt(_agent.nextPosition);
     }
 
     private bool IsInRange(Vector3 distance)
@@ -113,18 +129,42 @@ public class Enemy : MonoBehaviour
 
     private void Idle()
     {
-        animator.SetTrigger("Dance");
+        animator.SetTrigger("Idle");
     }
 
     private void Attack()
     {
-        animator.SetTrigger("Attack");
+        if (Time.time - lastAttackTime >= attackCooldown)
+        {
+            animator.SetTrigger("Attack");
+            if (target.CompareTag("Player"))
+            {
+                Invoke("DealDamageDelayed",1f);
+                
+            }
+            else if (target.CompareTag("Soldier"))
+            {
+                target.GetComponent<SoldierChicken>().TakeDamage(_damage);
+            }
+
+            lastAttackTime = Time.time;
+        }
+    }
+
+    private void DealDamageDelayed()
+    {
+        Player.Instance.TakeDamage(_damage);
     }
 
     private void Die()
     {
         isDead = true;
         animator.SetTrigger("Die");
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _health -= damage;
     }
 
 }

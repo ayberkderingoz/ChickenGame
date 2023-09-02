@@ -13,7 +13,7 @@ namespace Entity
     public class Skeleton : MonoBehaviour
     {
 
-        private float _timeSinceLastSpawn = 0f;
+        /*private float _timeSinceLastSpawn = 0f;
         [SerializeField] private float _objectDuration = 60f;
         private PooledObject _pooledObject;
         [SerializeField] private float range = 10f;
@@ -93,7 +93,7 @@ namespace Entity
             
 
 
-        }
+        }*/
 
     }
 }
