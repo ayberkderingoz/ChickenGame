@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2818349947796992544}
   - component: {fileID: 4332589794696885464}
   - component: {fileID: 5738905986405502120}
+  - component: {fileID: 6673017177022679117}
   m_Layer: 0
   m_Name: SoldierProjectile
   m_TagString: Untagged
@@ -110,3 +111,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e8f955344b0499fab8be417a7a8fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!195 &6673017177022679117
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7938815096409219090}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

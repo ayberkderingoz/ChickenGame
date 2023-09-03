@@ -5,6 +5,7 @@ using Projectile;
 using Spawner;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Entity
 {
@@ -14,15 +15,19 @@ namespace Entity
         private NavMeshAgent _agent;
         private PooledObject _pooledObject;
         private bool _attackMode = false;
-        [SerializeField] private float range = 10f;
+        [SerializeField] private float searchRange = 25f;
+        [SerializeField] private float attackRange = 12f;
         private int _damage = 5;
         private int _health = 100;
         private float _timeSinceLastShot = 0f;
         [SerializeField] private float _shotInterval = 2f;
         public List<GameObject> enemyList;
         
+        [SerializeField] private float attackCooldown = 2.19f;
+        private float lastAttackTime;
+        
         [SerializeField] private LayerMask targetLayer;
-        [SerializeField] private float detectionRange = 15f;
+        [SerializeField] private float detectionRange = 25;
         public GameObject target; //can change public
 
 
@@ -38,7 +43,7 @@ namespace Entity
                 SearchTarget();
                 if (target is not null)
                 {
-                    if (Vector3.Distance(gameObject.transform.position, target.transform.position) > range)
+                    if (Vector3.Distance(gameObject.transform.position, target.transform.position) > attackRange)
                     {
                         MoveToEnemy();
                     }
@@ -59,11 +64,8 @@ namespace Entity
 
         private void MoveToEnemy()
         {
-            Vector3 direction = target.transform.position - transform.position;
 
-            // Subtract the range from the direction vector to get the position
-            var calculatedPosition = target.transform.position - direction.normalized * (range*0.9f);
-            _agent.SetDestination(calculatedPosition);
+            _agent.SetDestination(target.transform.position);
         }
 
         private void OnEnemiesChanged(List<GameObject> enemies)
@@ -121,20 +123,23 @@ namespace Entity
             var enemyPosition = enemy.transform.position;
             var position = transform.position;
             var distance = Vector3.Distance(enemyPosition, position);
-            return distance < range;
+            return distance < searchRange;
         }
 
         private void ShootProjectile()
         {
-        
-            var projectilePooledObject = ObjectPool.Instance.GetPooledObject(PooledObjectType.SoldierProjectile);
-            var projectile = projectilePooledObject.gameObject;
-            var position = transform.position;
-            projectile.transform.position =
-                new Vector3(position.x, position.y + 1.2f, position.z);
-            
-            projectile.SetActive(true);
-            projectile.GetComponent<SoldierProjectile>().MoveToEnemy(projectilePooledObject,target);
+            if (Time.time - lastAttackTime >= attackCooldown)
+            {
+                var projectilePooledObject = ObjectPool.Instance.GetPooledObject(PooledObjectType.SoldierProjectile);
+                var projectile = projectilePooledObject.gameObject;
+                var position = transform.position;
+                projectile.transform.position =
+                    new Vector3(position.x, position.y + 1.2f, position.z);
+
+                projectile.SetActive(true);
+                projectile.GetComponent<SoldierProjectile>().MoveToEnemy(projectilePooledObject, target);
+                lastAttackTime = Time.time;
+            }
             
 
 
