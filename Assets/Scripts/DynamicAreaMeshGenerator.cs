@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 using Controller;
 
 public class DynamicAreaMeshGenerator : MonoBehaviour
@@ -13,7 +12,10 @@ public class DynamicAreaMeshGenerator : MonoBehaviour
     public List<GameObject> enemies;
 
     // The distance to expand the area from enemies
-    public float expansionDistance = 2.0f;
+    public float expansionDistance = 1.0f;
+
+    // Number of vertices per enemy
+    private int verticesPerEnemy = 16;
 
     void Start()
     {
@@ -43,33 +45,31 @@ public class DynamicAreaMeshGenerator : MonoBehaviour
         // Calculate normals (you might need to recalculate normals based on your mesh)
 
         //dynamicAreaMesh.vertices = vertices.ToArray();
-        dynamicAreaMesh.RecalculateNormals();
-        dynamicAreaMesh.RecalculateBounds();
+        //dynamicAreaMesh.RecalculateNormals();
+        //dynamicAreaMesh.RecalculateBounds();
 
         // Assign the mesh to the MeshFilter
         meshFilter.mesh = dynamicAreaMesh;
-
     }
 
     Vector3[] CalculateVertices()
     {
         // Calculate vertices based on enemy positions
-        int vertexCount = enemies.Count * 4; // Four vertices for each enemy
+        int vertexCount = enemies.Count * verticesPerEnemy; // 16 vertices for each enemy
         Vector3[] vertices = new Vector3[vertexCount];
 
         for (int i = 0; i < enemies.Count; i++)
         {
             Vector3 enemyPos = enemies[i].transform.position;
 
-            // Calculate the vertices for a square around each enemy
-            float x = enemyPos.x;
-            float z = enemyPos.z;
-
-            // Vertices order: top left, top right, bottom left, bottom right
-            vertices[i * 4] = new Vector3(x - expansionDistance, 0.1f, z + expansionDistance);
-            vertices[i * 4 + 1] = new Vector3(x + expansionDistance, 0.1f, z + expansionDistance);
-            vertices[i * 4 + 2] = new Vector3(x - expansionDistance, 0.1f, z - expansionDistance);
-            vertices[i * 4 + 3] = new Vector3(x + expansionDistance, 0.1f, z - expansionDistance);
+            // Calculate the vertices for a polygon around each enemy
+            for (int j = 0; j < verticesPerEnemy; j++)
+            {
+                float angle = 2 * Mathf.PI * j / verticesPerEnemy;
+                float x = enemyPos.x + Mathf.Cos(angle) * expansionDistance;
+                float z = enemyPos.z + Mathf.Sin(angle) * expansionDistance;
+                vertices[i * verticesPerEnemy + j] = new Vector3(x, 0.1f, z);
+            }
         }
 
         return vertices;
@@ -77,43 +77,45 @@ public class DynamicAreaMeshGenerator : MonoBehaviour
 
     int[] CalculateTriangles(Vector3[] vertices)
     {
-        // Calculate triangles based on a grid pattern around the enemies
-
         int vertexCount = vertices.Length;
+        int enemyCount = vertexCount / verticesPerEnemy;
 
         // Ensure we have enough vertices to create triangles
-        if (vertexCount < 4)
+        if (vertexCount < 3)
         {
             return new int[0]; // Not enough vertices for triangles
         }
 
-        int gridSize = Mathf.FloorToInt(Mathf.Sqrt(vertexCount)); // Grid size along one axis
-
         List<int> trianglesList = new List<int>();
 
-        // Create triangles within the grid
-        for (int row = 0; row < gridSize - 1; row++)
+        // Create triangles connecting vertices of different enemies
+        for (int i = 0; i < enemyCount; i++)
         {
-            for (int col = 0; col < gridSize - 1; col++)
+            for (int j = 0; j < verticesPerEnemy; j++)
             {
-                int topLeft = row * gridSize + col;
-                int topRight = topLeft + 1;
-                int bottomLeft = (row + 1) * gridSize + col;
-                int bottomRight = bottomLeft + 1;
+                int currentVertex = i * verticesPerEnemy + j;
+                int nextVertex = i * verticesPerEnemy + (j + 1) % verticesPerEnemy;
 
-                // Define two triangles for each grid cell
-                trianglesList.Add(topLeft);
-                trianglesList.Add(bottomLeft);
-                trianglesList.Add(topRight);
+                int nextEnemyVertex = ((i + 1) % enemyCount) * verticesPerEnemy + j;
+                int nextEnemyNextVertex = ((i + 1) % enemyCount) * verticesPerEnemy + (j + 1) % verticesPerEnemy;
 
-                trianglesList.Add(topRight);
-                trianglesList.Add(bottomLeft);
-                trianglesList.Add(bottomRight);
+                trianglesList.Add(currentVertex);
+                trianglesList.Add(nextVertex);
+                trianglesList.Add(nextEnemyVertex);
+
+                trianglesList.Add(nextEnemyVertex);
+                trianglesList.Add(nextVertex);
+                trianglesList.Add(nextEnemyNextVertex);
             }
         }
 
         return trianglesList.ToArray();
     }
+
+
+
+
+
 
 
 }
