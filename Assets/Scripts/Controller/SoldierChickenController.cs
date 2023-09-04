@@ -34,6 +34,12 @@ public class SoldierChickenController : MonoBehaviour
         soldierChickens.Add(soldier);
         OnSoldierChickenChanged?.Invoke(soldierChickens);
     }
+
+    public void RemoveSoldier(GameObject soldier)
+    {
+        soldierChickens.Remove(soldier);
+        OnSoldierChickenChanged?.Invoke(soldierChickens);
+    }
     public GameObject GetClosestSoldier(Vector3 pos)
     {
         var closestDistance = Vector3.Distance(soldierChickens[0].transform.position,pos);

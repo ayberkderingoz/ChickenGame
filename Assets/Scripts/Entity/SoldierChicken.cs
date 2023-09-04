@@ -6,6 +6,7 @@ using Spawner;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using Object = System.Object;
 
 namespace Entity
 {
@@ -15,12 +16,12 @@ namespace Entity
         private NavMeshAgent _agent;
         private PooledObject _pooledObject;
         private bool _attackMode = false;
-        [SerializeField] private float searchRange = 25f;
+
         [SerializeField] private float attackRange = 12f;
         private int _damage = 5;
-        private int _health = 100;
+        public int _health = 100;
         private float _timeSinceLastShot = 0f;
-        [SerializeField] private float _shotInterval = 2f;
+
         public List<GameObject> enemyList;
         
         [SerializeField] private float attackCooldown = 2.19f;
@@ -36,7 +37,7 @@ namespace Entity
             EnemyController.Instance.OnEnemiesChanged += OnEnemiesChanged;
         }
 
-        void Update()
+        void FixedUpdate()
         {
             if (_attackMode)
             {
@@ -49,8 +50,9 @@ namespace Entity
                     }
                     else
                     {
+                        StopMoving();
                         ShootProjectile();
-                        target.gameObject.GetComponent<Enemy>().TakeDamage(_damage);
+                        
                     }
                 }
                 else
@@ -62,9 +64,14 @@ namespace Entity
             
         }
 
+        private void StopMoving()
+        {
+            _agent.SetDestination(transform.position);
+        }
+
         private void MoveToEnemy()
         {
-
+            
             _agent.SetDestination(target.transform.position);
         }
 
@@ -82,24 +89,7 @@ namespace Entity
         {
             return _attackMode;
         }
-        private GameObject FindClosestSkeleton()
-        {
-            //find closest skeleton
-            var skeletons = GameObject.FindGameObjectsWithTag("Skeleton");
-            var closestSkeleton = skeletons[0];
-            var closestDistance = Vector3.Distance(transform.position, closestSkeleton.transform.position);
-            foreach (var skeleton in skeletons)
-            {
-                var distance = Vector3.Distance(transform.position, skeleton.transform.position);
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestSkeleton = skeleton;
-                }
-            }
 
-            return closestSkeleton;
-        }
 
         public void SetPooledObject(PooledObject pooledObject)
         {
@@ -117,14 +107,7 @@ namespace Entity
             var areas = GameObject.FindGameObjectsWithTag("SoldierArea");
             _agent.SetDestination(SoldierPositionManager.Instance.GetPosition());
         }
-        private bool IsEnemyInRange() //deprecated
-        {
-            var enemy = GameObject.FindGameObjectWithTag("Skeleton");
-            var enemyPosition = enemy.transform.position;
-            var position = transform.position;
-            var distance = Vector3.Distance(enemyPosition, position);
-            return distance < searchRange;
-        }
+
 
         private void ShootProjectile()
         {
@@ -134,10 +117,11 @@ namespace Entity
                 var projectile = projectilePooledObject.gameObject;
                 var position = transform.position;
                 projectile.transform.position =
-                    new Vector3(position.x, position.y + 1.2f, position.z);
+                    new Vector3(position.x, position.y+1.2f, position.z+2f);
 
                 projectile.SetActive(true);
                 projectile.GetComponent<SoldierProjectile>().MoveToEnemy(projectilePooledObject, target);
+                target.gameObject.GetComponent<Enemy>().TakeDamage(_damage);
                 lastAttackTime = Time.time;
             }
             
@@ -153,6 +137,8 @@ namespace Entity
             foreach (GameObject targetObject in enemyList)
             {
                 Vector3 rayDirection = targetObject.transform.position - transform.position;
+                rayDirection.y += 1;
+                Debug.DrawRay(transform.position, rayDirection, Color.red);
                 if (Physics.Raycast(transform.position, rayDirection, out RaycastHit hit, detectionRange, targetLayer))
                 {
 
@@ -175,6 +161,7 @@ namespace Entity
 
         public void TakeDamage(int damage)
         {
+
             _health -= damage;
             if (_health <= 0)
             {
@@ -185,7 +172,9 @@ namespace Entity
 
         private void Die()
         {
-            Destroy(gameObject);
+            SoldierChickenController.Instance.RemoveSoldier(gameObject);
+            _pooledObject.ReturnToPool();
+            
         }
     }
 }

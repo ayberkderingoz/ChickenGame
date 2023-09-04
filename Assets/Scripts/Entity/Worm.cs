@@ -68,7 +68,7 @@ namespace Entity
             else
             {
                 StopAllCoroutines();
-                CharacterMovement.Instance.SetPullingMode(5f,false);
+                CharacterMovement.Instance.SetPullingMode(10f,false);
                 head.position = _headFirstPos;
                 Player.Instance.SetPulling(false);
                 _pooledObject.ReturnToPool();

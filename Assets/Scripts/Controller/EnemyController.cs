@@ -34,12 +34,18 @@ namespace Controller
 
         public void BroadcastEnemies()
         {
+            Invoke("BroadcastEnemiesDelayed",2f);
+        }
+
+        private void BroadcastEnemiesDelayed()
+        {
             OnEnemiesChanged?.Invoke(enemyList);
         }
 
         public void RemoveEnemy(GameObject enemy)
         {
             enemyList.Remove(enemy);
+            OnEnemiesChanged?.Invoke(enemyList);
         }
 
 

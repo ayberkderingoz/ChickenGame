@@ -12,7 +12,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
 
-    [SerializeField] private int _damage = 5;
+    private int _damage = 5;
     [SerializeField] private int _health = 100;
     
     public GameObject target;
@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float attackCooldown = 2.19f;
     private float lastAttackTime;
     [SerializeField] private LayerMask targetLayer;
-    [SerializeField] private float detectionRange;
+    private float detectionRange = 13f;
     public string[] targetTags = { "Player", "Soldier" };
 
 
@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
     
 
     // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
         SearchTarget();
         if (target is not null)
@@ -120,12 +120,6 @@ public class Enemy : MonoBehaviour
         transform.LookAt(_agent.nextPosition);
     }
 
-    private bool IsInRange(Vector3 distance)
-    {
-        
-        
-        return true;
-    }
 
     private void Idle()
     {
@@ -144,11 +138,17 @@ public class Enemy : MonoBehaviour
             }
             else if (target.CompareTag("Soldier"))
             {
-                target.GetComponent<SoldierChicken>().TakeDamage(_damage);
+                Invoke("DealDamageSoldierDelayed",1f);
             }
 
             lastAttackTime = Time.time;
         }
+    }
+
+
+    private void DealDamageSoldierDelayed()
+    {
+        target.GetComponent<SoldierChicken>().TakeDamage(_damage);
     }
 
     private void DealDamageDelayed()
@@ -158,13 +158,24 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        isDead = true;
         animator.SetTrigger("Die");
     }
 
     public void TakeDamage(int damage)
     {
         _health -= damage;
+        if (_health <= 0)
+        {
+            Die();
+            Invoke("RemoveEnemy",2.2f);
+        }
     }
+
+    private void RemoveEnemy()
+    {
+        EnemyController.Instance.RemoveEnemy(gameObject);
+        Destroy(gameObject);
+    }
+    
 
 }

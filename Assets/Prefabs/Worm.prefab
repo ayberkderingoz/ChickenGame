@@ -146,18 +146,43 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7800968321537225027, guid: 407140099c97d42b9ac9255e091f1919, type: 3}
   m_PrefabInstance: {fileID: 4926396519702796815}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &3441470420886708796 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -1469127211873437645, guid: 407140099c97d42b9ac9255e091f1919, type: 3}
+--- !u!4 &3208223768288198202 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1667469803388705739, guid: 407140099c97d42b9ac9255e091f1919, type: 3}
   m_PrefabInstance: {fileID: 4926396519702796815}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3757377985393193224
+--- !u!4 &3576417007469826166 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8502778337884408441, guid: 407140099c97d42b9ac9255e091f1919, type: 3}
+  m_PrefabInstance: {fileID: 4926396519702796815}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3916213639268028209 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1006769991962897090, guid: 407140099c97d42b9ac9255e091f1919, type: 3}
+  m_PrefabInstance: {fileID: 4926396519702796815}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4887719468826263012 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 407140099c97d42b9ac9255e091f1919, type: 3}
+  m_PrefabInstance: {fileID: 4926396519702796815}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4970806431721555680 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 46665010434710767, guid: 407140099c97d42b9ac9255e091f1919, type: 3}
+  m_PrefabInstance: {fileID: 4926396519702796815}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5233035816704812894 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 407140099c97d42b9ac9255e091f1919, type: 3}
+  m_PrefabInstance: {fileID: 4926396519702796815}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5813689682281568643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3441470420886708796}
+  m_GameObject: {fileID: 5233035816704812894}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61574e354ba34a141ae2cc1228f5eda3, type: 3}
@@ -359,7 +384,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  UsePartialBlend: 1
+  UsePartialBlend: 0
   BlendCurve:
     serializedVersion: 2
     m_Curve:
@@ -404,7 +429,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     Use2D: 0
-  IKTarget: {fileID: 4009557318640894007}
+  IKTarget: {fileID: 0}
   IKAutoWeights: 1
   IKBaseReactionWeight: 0.65
   IKReactionWeightCurve:
@@ -463,29 +488,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  IKLimitSettings:
-  - AngleLimit: 45
-    TwistAngleLimit: 5
-    UseInChain: 1
-  - AngleLimit: 45
-    TwistAngleLimit: 5
-    UseInChain: 1
-  - AngleLimit: 45
-    TwistAngleLimit: 5
-    UseInChain: 1
-  - AngleLimit: 45
-    TwistAngleLimit: 5
-    UseInChain: 1
-  - AngleLimit: 45
-    TwistAngleLimit: 5
-    UseInChain: 1
-  - AngleLimit: 45
-    TwistAngleLimit: 5
-    UseInChain: 1
-  - AngleLimit: 45
-    TwistAngleLimit: 5
-    UseInChain: 1
-  IKSelectiveChain: 1
+  IKLimitSettings: []
+  IKSelectiveChain: 0
   RotationOffset: {x: 0, y: 0, z: 0, w: 1}
   Curving: {x: 0, y: 0, z: 0, w: 1}
   UseCurvingCurve: 0
@@ -586,7 +590,7 @@ MonoBehaviour:
   _editor_Title: Tail Animator 2
   _editor_IsInspectorViewingColliders: 0
   _editor_IsInspectorViewingIncludedColliders: 0
-  _editor_animatorViewedCounter: 1
+  _editor_animatorViewedCounter: 0
   TailSegments: []
   GhostParent:
     ProceduralPosition: {x: 0, y: 0, z: 0}
@@ -662,9 +666,9 @@ MonoBehaviour:
   DistanceWithoutY: 0
   DistanceMeasurePoint: {x: 0, y: 0, z: 0}
   FadeDuration: 0.75
-  Deflection: 0.401
-  DeflectionStartAngle: 16.458073
-  DeflectionSmooth: 0.28
+  Deflection: 0
+  DeflectionStartAngle: 10
+  DeflectionSmooth: 0
   DeflectionFalloff:
     serializedVersion: 2
     m_Curve:
@@ -690,28 +694,30 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   DeflectOnlyCollisions: 1
-  _Editor_Category: 3
+  _Editor_Category: 0
   _Editor_FeaturesCategory: 0
   DrawGizmos: 1
-  StartBone: {fileID: 1543293409690288370}
+  StartBone: {fileID: 3208223768288198202}
   EndBone: {fileID: 0}
   EndBoneJointOffset: {x: 0, y: 0, z: 0}
   _TransformsGhostChain:
+  - {fileID: 3208223768288198202}
+  - {fileID: 3916213639268028209}
   - {fileID: 1543293409690288370}
   - {fileID: 7706757111830352409}
   - {fileID: 3576417007469826166}
   - {fileID: 4970806431721555680}
   - {fileID: 2483923459127221513}
   - {fileID: 2890335504959941452}
-  _GhostChainInitCount: 6
+  _GhostChainInitCount: 8
   UpdateRate: 0
   AnimatePhysics: 0
   InterpolateRate: 0
   Prewarm: 0
   Slithery: 1
   Curling: 0.5
-  Springiness: 0.194
-  MaxStretching: 1
+  Springiness: 0
+  MaxStretching: 0.375
   AngleLimit: 181
   AngleLimitAxis: {x: 0, y: 0, z: 0}
   LimitAxisRange: {x: 0, y: 0}
@@ -723,7 +729,7 @@ MonoBehaviour:
   ReactionSpeed: 0.9
   Sustain: 0
   RotationRelevancy: 1
-  SmoothingStyle: 0
+  SmoothingStyle: 1
   DeltaType: 4
   UpdateAsLast: 1
   DetectZeroKeyframes: 1
@@ -735,26 +741,6 @@ MonoBehaviour:
   Tangle: 0
   AnimateRoll: 0
   OverrideKeyframeAnimation: 0
---- !u!4 &3576417007469826166 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8502778337884408441, guid: 407140099c97d42b9ac9255e091f1919, type: 3}
-  m_PrefabInstance: {fileID: 4926396519702796815}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &4009557318640894007 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8357234689155766840, guid: 407140099c97d42b9ac9255e091f1919, type: 3}
-  m_PrefabInstance: {fileID: 4926396519702796815}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &4887719468826263012 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 407140099c97d42b9ac9255e091f1919, type: 3}
-  m_PrefabInstance: {fileID: 4926396519702796815}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &4970806431721555680 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 46665010434710767, guid: 407140099c97d42b9ac9255e091f1919, type: 3}
-  m_PrefabInstance: {fileID: 4926396519702796815}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7706757111830352409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3363614196087785494, guid: 407140099c97d42b9ac9255e091f1919, type: 3}

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7127890440868838423}
   - component: {fileID: 2365938197074844538}
   - component: {fileID: 5410293724752229933}
-  - component: {fileID: -6332541361538891182}
   - component: {fileID: 5783963786926660019}
-  m_Layer: 0
+  - component: {fileID: -6223495046642116135}
+  m_Layer: 6
   m_Name: Soldier
   m_TagString: Soldier
   m_Icon: {fileID: 0}
@@ -48,8 +48,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6421442, y: 2.355856, z: 2.3267825}
-  m_Center: {x: 0.025772065, y: 1.1679158, z: 0.0049420595}
+  m_Size: {x: 1.1267577, y: 1.943846, z: 1.275666}
+  m_Center: {x: 0.005427897, y: 0.96191084, z: -0.0933882}
 --- !u!195 &5410293724752229933
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -72,7 +72,28 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!54 &-6332541361538891182
+--- !u!114 &5783963786926660019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2568121900777430965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3684d82a98db4b6b868be543dd1b04f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 12
+  _health: 100
+  enemyList: []
+  attackCooldown: 2.19
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  detectionRange: 20
+  target: {fileID: 0}
+--- !u!54 &-6223495046642116135
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,26 +109,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &5783963786926660019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2568121900777430965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3684d82a98db4b6b868be543dd1b04f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 10
-  _shotInterval: 2
-  enemyList: []
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  detectionRange: 15
-  target: {fileID: 0}
 --- !u!1001 &6606318177080211426
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -179,6 +180,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ecc5df7708f5a4a8c86514846ae1351b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976774806796772531, guid: ecc5df7708f5a4a8c86514846ae1351b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecc5df7708f5a4a8c86514846ae1351b, type: 3}
 --- !u!4 &6639680361153368073 stripped
@@ -237,9 +246,61 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7403002964094449856, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -2464052661545380425, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -1017372850509616109, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -945367093958665821, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 911088564753622055, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
       propertyPath: m_Name
       value: Hen_Animations
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 945614497576433354, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373804507276978751, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2668605608433959078, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2932635810120784719, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743993344710040121, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3896644541231073943, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736787618702837447, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dcdefbd312e244b9bb192197e46b2e5, type: 3}
