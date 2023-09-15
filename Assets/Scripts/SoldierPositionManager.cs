@@ -18,11 +18,11 @@ public class SoldierPositionManager : MonoBehaviour
         {
             _instance = this;
         }
+        _areas = GameObject.FindGameObjectsWithTag("SoldierArea").ToList();
     }
 
     private void Start()
     {
-        _areas = GameObject.FindGameObjectsWithTag("SoldierArea").ToList();
         
     }
     public Vector3 GetPosition()

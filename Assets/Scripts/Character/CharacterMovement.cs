@@ -14,28 +14,28 @@ namespace Character
         [SerializeField] private FixedJoystick _joystick;
         private Animator _animator;
         private Vector3 _lastMovement;
-        private float _timer = 0.0f;
-        private float _waitTime = .5f;
+        private float _timer;
+        private const float WaitTime = .5f;
         private Transform _direction;
         private bool _isPulling;
-        private bool thrown;
+        private bool _isThrown;
+        
 
-
-        public void SetThrown(bool isThrown)
+        public void SetThrown()
         {
-            thrown = isThrown;
-            StartCoroutine(StopThrown());
+            _isThrown = true;
+            StartCoroutine(StopThrownDelayed());
         }
 
         public bool GetThrown()
         {
-            return thrown;
+            return _isThrown;
         }
 
-        private IEnumerator StopThrown()
+        private IEnumerator StopThrownDelayed()
         {
             yield return new WaitForSeconds(.7f);
-            thrown = false;
+            _isThrown = false;
         }
         
 
@@ -50,12 +50,10 @@ namespace Character
 
         public void SetPullingMode(float speed,bool isPulling)
         {
-            
             moveSpeed = speed;
             _isPulling = isPulling;
             _direction = null;
             
-
         }
 
         
@@ -80,10 +78,10 @@ namespace Character
         {
             //_rigidBody.velocity = new Vector3(_joystick.Horizontal * moveSpeed, _rigidBody.velocity.y, _joystick.Vertical * moveSpeed);
 
+            if (_isThrown) return;
             float moveX = _joystick.Horizontal;
             float moveZ = _joystick.Vertical;
-            Vector3 movement = new Vector3(moveX, 0, moveZ);
-            if (thrown) return;
+            var movement = new Vector3(moveX, 0, moveZ);
             if (movement != Vector3.zero && _joystick.isActiveAndEnabled && !_isPulling)
             {
                 
@@ -105,7 +103,7 @@ namespace Character
                 _rigidBody.AddForce(_lastMovement * 0.1f, ForceMode.Impulse);
                 _lastMovement = Vector3.zero;
                 _timer += Time.deltaTime;
-                if (_timer >= _waitTime)
+                if (_timer >= WaitTime)
                 {
                     _timer = 0.0f;
                 }

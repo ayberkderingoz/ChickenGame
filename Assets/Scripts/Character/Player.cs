@@ -11,7 +11,7 @@ namespace Character
     {
         private int _level = 0;
         private int _xp = 0;
-        public int _health = 100;
+        public int health = 100;
 
         private bool _pulling;
 
@@ -35,14 +35,14 @@ namespace Character
 
         public void TakeDamage(int damage)
         {
-            _health -= damage;
-            if (_health <= 0)
+            health -= damage;
+            if (health <= 0)
             {
                 //TODO:Game Over
             }
             else
             {
-                OnHealthChanged?.Invoke(_health);
+                OnHealthChanged?.Invoke(health);
 
             }
         }
@@ -72,9 +72,9 @@ namespace Character
             _eggs.Add(egg, pooledObjet);
             ScoreManager.Instance.UpdateScore(ScoreManager.ScoreType.Egg, _eggs.Count);
             egg.transform.SetParent(gameObject.transform);
-            float maxXPos = egg.transform.position.y + egg.transform.localScale.y / 2;
+            float yPos = egg.transform.position.y + egg.transform.localScale.y / 2;
             var position = gameObject.transform.position;
-            egg.transform.localPosition = new Vector3(0, (maxXPos * _eggs.Count), -1);
+            egg.transform.localPosition = new Vector3(0, (yPos * _eggs.Count), -1);
 
         }
 
@@ -90,7 +90,6 @@ namespace Character
         {
             return _eggs.ContainsValue(pooledObject);
         }
-        
         
         public Dictionary<GameObject,PooledObject> GetEggs()
         {

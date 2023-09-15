@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.SocialPlatforms.Impl;
@@ -31,20 +32,13 @@ namespace UI
         
         private void OnScoreReset(ScoreManager.ScoreType scoreType)
         {
-            switch (scoreType)
-            {
-                case ScoreManager.ScoreType.Worm:
-                    wormCount.text = "0";
-                    break;
-                case ScoreManager.ScoreType.Gold:
-                    goldCount.text = "0";
-                    break;
-                case ScoreManager.ScoreType.Egg:
-                    eggCount.text = "0";
-                    break;
-            }
+            UpdateTexts(scoreType,0);
         }
         private void OnScoreChanged(ScoreManager.ScoreType scoreType, int count)
+        {
+            UpdateTexts(scoreType,count);
+        }
+        private void UpdateTexts(ScoreManager.ScoreType scoreType, int count)
         {
             switch (scoreType)
             {

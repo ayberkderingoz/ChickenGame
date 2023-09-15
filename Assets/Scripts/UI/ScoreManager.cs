@@ -1,11 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -25,6 +20,7 @@ public class ScoreManager : MonoBehaviour
         {
             Instance = this;
         }
+        
         _scores = new Dictionary<ScoreType, int>();
         foreach (ScoreType scoreType in Enum.GetValues(typeof(ScoreType)))
         {

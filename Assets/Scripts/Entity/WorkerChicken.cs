@@ -1,40 +1,26 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Entity;
 using Spawner;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class WorkerChicken : MonoBehaviour
 {
-    
-    public bool _isCarryingWorm = false;
     private NavMeshAgent _agent;
+    public bool _isCarryingWorm = false;
     private GameObject bigChicken;
     public List<GameObject> _wormList;
-    private PooledObject _pooledObject;
     public GameObject _targetWorm;
 
-    
 
-    public void SetPooledObject(PooledObject pooledObject)
-    {
-        _pooledObject = pooledObject;
-        SetAvaliableWorms();
-    }
-    
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
-        bigChicken = GameObject.FindGameObjectWithTag("BigChicken");
-
+        bigChicken = BigChicken.Instance.gameObject;
     }
 
     //wait then initialize big chicken
-    private void SetAvaliableWorms()
+    public void SetAvailableWorms()
     {
         _wormList = WormSpawner.Instance.worms;
     }
@@ -44,29 +30,33 @@ public class WorkerChicken : MonoBehaviour
         WormSpawner.Instance.OnWormsChanged += OnWormsChanged;
     }
 
-    
+
     private void OnWormsChanged(List<GameObject> worms)
     {
-        this._wormList = worms;
+        _wormList = worms;
     }
+
     private void Update()
     {
         if (_isCarryingWorm)
         {
-
-            MoveToBigChicken();
+            transform.LookAt(_agent.nextPosition);
+            if (!_isMovingToBigChicken)
+                MoveToBigChicken();
         }
-        else if(_targetWorm == null)
+        else if (_targetWorm == null)
         {
-            
             MoveToWorm();
         }
     }
+
+    private bool _isMovingToBigChicken;
+
     private void MoveToBigChicken()
     {
+        _isMovingToBigChicken = true;
         _targetWorm = null;
         _agent.SetDestination(bigChicken.transform.position);
-        transform.LookAt(_agent.nextPosition);
     }
 
     //move to the closest worm
@@ -82,7 +72,6 @@ public class WorkerChicken : MonoBehaviour
 
     private GameObject GetClosestWormPosition(Vector3 position)
     {
-        
         var closestWorm = _wormList[0];
         foreach (var worm in _wormList)
         {
@@ -91,28 +80,29 @@ public class WorkerChicken : MonoBehaviour
             {
                 closestWorm = worm;
                 worm.GetComponent<Worm>().isTargeted = true;
-
             }
         }
+
         return closestWorm;
     }
 
-    
 
-    
     public bool IsCarrying()
     {
         return _isCarryingWorm;
     }
-    
+
     //delayed setIscarrying
-    public void SetCarrying(bool isCarrying)
+    public void SetCarrying(bool isCarrying )
     {
         _isCarryingWorm = isCarrying;
+        if (isCarrying)
+            _isMovingToBigChicken = false;
+
+
     }
-    
-    
-    
+
+
     /*private Vector3 GetClosestWormPositionAAA(Vector3 position) //object pooled but don't work
     {
         var worms = ObjectPool.Instance.PoolDictionary[PooledObjectType.Worm].ToArray();

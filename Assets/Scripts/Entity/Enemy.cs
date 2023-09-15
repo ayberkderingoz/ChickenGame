@@ -5,6 +5,7 @@ using Character;
 using Controller;
 using Entity;
 using JetBrains.Annotations;
+using NaughtyAttributes;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -171,6 +172,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    [Button()]
     private void RemoveEnemy()
     {
         EnemyController.Instance.RemoveEnemy(gameObject);

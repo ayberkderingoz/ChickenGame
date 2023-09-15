@@ -1,12 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Entity;
-using UI;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class BigChicken : MonoBehaviour
@@ -79,26 +73,26 @@ public class BigChicken : MonoBehaviour
     private void LayEgg()
     {
         var position = transform.position;
-        var randomPosition = position + new Vector3(UnityEngine.Random.Range(-2, 2), 0,
-            2);
+        var randomPosition = position + new Vector3(Random.Range(-2, 2), 0, 2);
         
         var eggPooledObject = ObjectPool.Instance.GetPooledObject(PooledObjectType.Egg);
-        var egg = eggPooledObject.gameObject;
-        egg.GetComponent<Egg>().SetPooledObject(eggPooledObject);
+        var eggObject = eggPooledObject.gameObject;
+        var egg = eggObject.GetComponent<Egg>();
+        egg.SetPooledObject(eggPooledObject);
 
 
         DropSmoothlyToLocation(egg,randomPosition);
-        egg.SetActive(true);
+        eggObject.SetActive(true);
         
     }
-    private void DropSmoothlyToLocation(GameObject egg,Vector3 position)
+    private void DropSmoothlyToLocation(Egg egg,Vector3 position)
     {
         StartCoroutine(DropSmoothly(egg,position));
         
     }
-    private IEnumerator DropSmoothly(GameObject egg,Vector3 position)
+    private IEnumerator DropSmoothly(Egg egg,Vector3 position)
     {
-        egg.GetComponent<Egg>().SetPickable(false);
+        egg.SetPickable(false);
         var position1 = transform.position;
         var startPosition = new Vector3(position1.x, position1.y + 3, position1.z);
         var t = 0f;
@@ -108,7 +102,7 @@ public class BigChicken : MonoBehaviour
             egg.transform.position = Vector3.Lerp(startPosition, position, t);
             yield return null;
         }
-        egg.GetComponent<Egg>().SetPickable(true);
+        egg.SetPickable(true);
     }
 
 }

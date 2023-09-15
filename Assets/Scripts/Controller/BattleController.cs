@@ -9,14 +9,14 @@ public class BattleController : MonoBehaviour
 {
 
     
-    private bool battleStarted = false;
+    private bool _isBattleStarted;
 
     private void Update()
     {
-        if ((battleStarted && SoldierChickenController.Instance.soldierChickens.Count == 0) ||
-            battleStarted && EnemyController.Instance.enemyList.Count == 0)
+        if (_isBattleStarted && SoldierChickenController.Instance.soldierChickens.Count == 0 ||
+            _isBattleStarted && EnemyController.Instance.enemyList.Count == 0)
         {
-            battleStarted = false;
+            _isBattleStarted = false;
             SetSoldiersAttack(false);
         }
     }
@@ -25,9 +25,8 @@ public class BattleController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            
             SetSoldiersAttack(true);
-            battleStarted = true;
+            _isBattleStarted = true;
         }
     }
 

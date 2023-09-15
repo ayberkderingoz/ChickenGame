@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Character;
 using UnityEngine;
@@ -27,10 +28,12 @@ namespace Controller
             }
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
-            Invoke("BroadcastEnemies",2f);
+            yield return new WaitForSeconds(2);
+            BroadcastEnemies();
         }
+
 
         public void BroadcastEnemies()
         {

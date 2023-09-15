@@ -38,9 +38,13 @@ public class DynamicAreaMeshGenerator : MonoBehaviour
         Vector3[] vertices = CalculateVertices();
         int[] triangles = CalculateTriangles(vertices);
 
+        dynamicAreaMesh.Clear(); //enemye ölünce action ekle la :D
+        
         // Assign the mesh data to the dynamicAreaMesh
         dynamicAreaMesh.vertices = vertices;
         dynamicAreaMesh.triangles = triangles;
+        
+
 
         // Calculate normals (you might need to recalculate normals based on your mesh)
 
